@@ -1,0 +1,8 @@
+-cpp bin
+-main Test
+-cp src
+-cp test
+-lib utest
+-resource jquery-1.7.2.js
+
+-cmd (cd bin && ./Test)
