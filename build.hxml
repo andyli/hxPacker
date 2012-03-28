@@ -3,6 +3,6 @@
 -cp src
 -cp test
 -lib utest
--resource jquery-1.7.2.js
+-debug
 
--cmd (cd bin && ./Test)
+-cmd (cd bin && ./Test-debug)

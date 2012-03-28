@@ -10,7 +10,7 @@ class RegGrpItem {
 	var expression:String;
 	
 	public var length(default, null):Int;
-	public var replacement(default, null):Replace;
+	public var replacement:Replace;
 	
 	public function toString():String {
 		return expression;

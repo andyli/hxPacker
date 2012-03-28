@@ -27,12 +27,31 @@ class Packer {
 	static public function encode52(c):String {
 		// Base52 encoding (a-Z)
 		function encode(c:Int):String {
-			return (c < 52 ? '' : encode(Std.int(c / 52))) +
-				((c = c % 52) > 25 ? String.fromCharCode(c + 39) : String.fromCharCode(c + 97));
+			var _c = c % 52;
+			return	(c < 52 ? '' : encode(Std.int(c/52))) +
+        			(_c > 25 ? String.fromCharCode(_c + 39) : String.fromCharCode(_c + 97));
 		}
 		
 		var encoded = encode(c);
 		if (~/^(do|if|in)$/.match(encoded)) encoded = encoded.substr(1) + 0;
 		return encoded;
+	}
+	
+	static public function encode62(c:Int) {
+		var _c = c % 62;
+		return	(c < 62 ? '' : encode62(Std.int(c/62))) + 
+				(_c > 35 ? String.fromCharCode(_c + 29) : toRadix(_c, 36));
+	}
+	
+	static public function toRadix(N:Float, radix:Int):String {
+		var HexN = "", Q:Float = Math.floor(Math.abs(N)), R;
+		while (true) {
+			R = Q % radix;
+			
+			HexN = "0123456789abcdefghijklmnopqrstuvwxyz".charAt(Std.int(R)) + HexN;
+			Q = (Q - R) / radix;
+			if (Q == 0) break;
+		}
+		return ((N < 0) ? "-" + HexN : HexN);
 	}
 }
