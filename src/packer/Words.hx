@@ -62,14 +62,7 @@ class Words {
 		words.array = array.slice(pos, end);
 		words.index = index;
 		words.length = words.array.length;
-		/*
-		var i = 0;
-		for (w in words.array) {
-			index.set(w.toString(), i);
-			w.index = i;
-			++i;
-		}
-		*/
+		
 		return words;
 	}
 }
