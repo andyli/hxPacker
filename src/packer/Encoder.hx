@@ -6,9 +6,9 @@ class Encoder {
 	
 	var regGrpItem:RegGrpItem;
 	
-	public function new(pattern:String, encoder:Int->String, ?ignore:Iterable<RegGrpItem>) {
+	public function new(?pattern:String, ?encoder:Int->String, ?ignore:Iterable<RegGrpItem>) {
 		parser = new Parser(ignore);
-		parser.add(new RegGrpItem(pattern, function(a) return ""));
+		if (pattern != null) parser.add(new RegGrpItem(pattern, function(a) return ""));
 		regGrpItem = parser.list.last();
 		this.encoder = encoder;
 	}

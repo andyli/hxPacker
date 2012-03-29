@@ -1,10 +1,11 @@
 package packer;
 
 class WordsItem {
-	var word:String;
+	public var word:String;
 	public var index:Int;
 	public var count:Int;
 	public var encoded:String;
+	public var replacement:String;
 	
 	public function new(word:String):Void {
 		this.word = word;
