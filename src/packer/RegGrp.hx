@@ -92,8 +92,9 @@ class RegGrp {
 	static function eregHasMatched(ereg:EReg, n:Int):Bool {
 		try {
 			return ereg.matched(n) != null;
-		} catch(e:Dynamic) {}
-		return false;
+		} catch(e:Dynamic) {
+			return false;
+		}
 	}
 	
 	// Count the number of sub-expressions in a RegExp/RegGrp.Item.

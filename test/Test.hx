@@ -12,6 +12,7 @@ import packer.Parser;
 import packer.Privates;
 import packer.RegGrp;
 import packer.RegGrpItem;
+import packer.Shrinker;
 import packer.Words;
 
 using Lambda;
@@ -190,6 +191,10 @@ class Test {
 	    Assert.equals(870, c);
 		
 		Assert.equals(jq62, new Base62().encode(jqPri));
+	}
+	
+	public function testShrinker():Void {
+		Assert.equals(jqShr, new Shrinker().shrink(jqMin));
 	}
 	
 	static function main():Void {
