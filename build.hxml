@@ -3,6 +3,5 @@
 -cp src
 -cp test
 -lib utest
--debug
 
--cmd (cd bin && ./Test-debug)
+-cmd (cd bin && ./Test)

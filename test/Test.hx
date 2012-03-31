@@ -51,16 +51,18 @@ class Test {
 	}
 	
 	public function testMinifier():Void {
+		var m = new Minifier();
+		
 		var code = "var add5 = makeAdder(5);";
-		Assert.equals("var add5=makeAdder(5);", Minifier.minify(code));
+		Assert.equals("var add5=makeAdder(5);", m.minify(code));
 		
 		var code = "var add5 = '123'";
-		Assert.equals("var add5='123'", Minifier.minify(code));
+		Assert.equals("var add5='123'", m.minify(code));
 		
 		var code = '//123';
-		Assert.equals('', Minifier.minify(code));
+		Assert.equals('', m.minify(code));
 		
-		Assert.equals(jqMin, Minifier.minify(jqSrc));
+		Assert.equals(jqMin, m.minify(jqSrc));
 	}
 	
 	public function testEncode52():Void {
@@ -195,6 +197,10 @@ class Test {
 	
 	public function testShrinker():Void {
 		Assert.equals(jqShr, new Shrinker().shrink(jqMin));
+	}
+	
+	public function testPacker():Void {
+		Assert.equals(jq62, new Packer().pack(jqSrc, true, true, true));
 	}
 	
 	static function main():Void {

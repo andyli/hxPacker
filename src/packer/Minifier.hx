@@ -3,7 +3,9 @@ package packer;
 using Lambda;
 
 class Minifier {
-	static public function minify(script:String):String {
+	public function new():Void {}
+	
+	public function minify(script:String):String {
 		// packing with no additional options
 	    script += "\n";
 	    script = ~/\\\r?\n/g.replace(script, "");

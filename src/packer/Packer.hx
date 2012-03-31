@@ -1,18 +1,24 @@
 package packer;
 
 class Packer {
+	public var minifier(default, null):Minifier;
 	public var shrinker(default, null):Shrinker;
 	public var privates(default, null):Privates;
 	public var base62(default, null):Base62;
 	
 	public function new():Void {
+		minifier = new Minifier();
 		shrinker = new Shrinker();
 		privates = new Privates();
 		base62 = new Base62();
 	}
 	
-	public function pack(script:String, base62:Base62, shrink:Shrinker, privates:Privates) {
-		
+	public function pack(script:String, base62:Bool, shrink:Bool, privates:Bool) {
+		script = this.minifier.minify(script);
+		if (shrink) script = this.shrinker.shrink(script);
+  		if (privates) script = this.privates.encode(script);
+  		if (base62) script = this.base62.encode(script);
+  		return script;
 	}
 	
 	static public var version = "3.1";
