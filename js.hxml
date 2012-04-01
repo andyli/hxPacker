@@ -1,0 +1,7 @@
+-js bin/Test.js
+-main Test
+-cp src
+-cp test
+-lib utest
+
+-cmd open bin/Test.html

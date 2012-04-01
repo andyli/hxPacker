@@ -1,0 +1,10 @@
+-php bin/php
+-main Test
+-cp src
+-cp test
+-lib utest
+-debug
+
+-cmd rm -rf ~/Sites/testphp
+-cmd cp -r bin/php ~/Sites/testphp
+-cmd open http://192.168.1.101/~andy/testphp

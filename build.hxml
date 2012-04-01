@@ -1,7 +1,1 @@
--js bin/Test.js
--main Test
--cp src
--cp test
--lib utest
-
--cmd (cd bin && open Test.html)
+js.hxml
