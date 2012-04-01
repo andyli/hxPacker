@@ -43,7 +43,7 @@ class Shrinker {
 		var BRACKETS      = ~/\{[^{}]*\}|\[[^\[\]]*\]|\([^\(\)]*\)|~[^~]+~/;
 		var BRACKETS_g    = ~/\{[^{}]*\}|\[[^\[\]]*\]|\([^\(\)]*\)|~[^~]+~/g;
 		var ENCODED_BLOCK = ~/~#?(\d+)~/;
-		var IDENTIFIER    = ~/[a-zA-Z_$][\w\$]*/g;
+		var IDENTIFIER    = ~/[a-zA-Z_$][\w\$]*/;
 		var SCOPED        = ~/~#(\d+)~/;
 		var VAR_g         = ~/\bvar\b/g;
 		var VARS          = ~/\bvar\s+[\w$]+[^;#]*|\bfunction\s+[\w$]+/;
@@ -51,7 +51,6 @@ class Shrinker {
 		var VAR_EQUAL     = ~/\s*=[^,;]*/g;
 		
 		var blocks = []; // store program blocks (anything between braces {})
-		
 		// decoder for program blocks
 		function decodeBlocks(script:String, encoded:EReg) {
 			while (encoded.match(script)) {
@@ -70,7 +69,6 @@ class Shrinker {
 				args = matchedOrNull(r, 3), 
 				block = matchedOrNull(r, 4),
 				replacement;
-			
 			if (prefix == null) prefix = "";
 			if (blockType == "function") {
 				// decode the function block (THIS IS THE IMPORTANT BIT)
@@ -78,7 +76,6 @@ class Shrinker {
 				// of newly shrunk variables
 				block = args + decodeBlocks(block, SCOPED);
 				prefix = BRACKETS.replace(prefix, "");
-				
 				// create the list of variable and argument names
 				args = args.substr(1, args.length-2);
 				
