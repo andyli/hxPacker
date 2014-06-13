@@ -3,13 +3,13 @@ package packer;
 using Lambda;
 
 class Words {
-	public var index(default, null):Hash<Int>;
+	public var index(default, null):Map<String,Int>;
 	public var array:Array<WordsItem>;
 	public var length(default, null):Int;
 	
 	public function new(?words:Iterable<WordsItem>):Void {
 		length = 0;
-		index = new Hash<Int>();
+		index = new Map<String,Int>();
 		array = [];
 		
 		if (words != null) {

@@ -1,7 +1,7 @@
 package packer;
 
 class Parser extends RegGrp {
-	public function new(?values:Iterable<RegGrpItem>, ?ignoreCase:Bool = false):Void {
+	public function new(?values:Iterable<RegGrpItem>, ?ignoreCase:Bool):Void {
 		super(values, ignoreCase);
 	}
 	

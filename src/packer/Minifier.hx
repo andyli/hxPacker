@@ -67,7 +67,7 @@ class Minifier {
 			new RegGrpItem("\\b\\s+@", function(a) return " @"),
 			new RegGrpItem("(\\d)\\s+(\\.\\s*[a-z\\$_\\[(])", function(a) return a[1] + " " + a[2]), // http://dean.edwards.name/weblog/2007/04/packer3/#comment84066
 			new RegGrpItem("([+-])\\s+([+-])", function(a) return a[1] + " " + a[2]), // c = a++ +b;
-			#if !(neko || cpp)
+			#if !(neko || cpp || php)
 			new RegGrpItem("(\\w)\\s+([\\u0080-\\uffff])", function(a) return a[1] + " " + a[2]), // http://code.google.com/p/base2/issues/detail?id=78
 			#end
 			new RegGrpItem("\\b\\s+\\$\\s+\\b", function(a) return " $ "), // var $ in

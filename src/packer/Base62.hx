@@ -12,7 +12,7 @@ class Base62 extends Encoder {
 		
 		words.sort();
 		
-		var encoded = new Hash<Int>();
+		var encoded = new Map<String,Int>();
 		for (i in 0...words.length) {
 			encoded.set(Packer.encode62(i), i);
 		}
@@ -47,7 +47,7 @@ class Base62 extends Encoder {
 	    // trim unencoded words
 	    words = words.slice(0, getKeyWords(words).split("|").length);
 	    
-	    script = getPattern(words).customReplace(script, replacement);
+	    script = getPattern(words).map(script, replacement);
 	    
 	    /* build the packed script */
 	    
@@ -59,12 +59,12 @@ class Base62 extends Encoder {
 	    var d = getDecoder(words);
 	
 	    // the whole thing
-	    return Std.format("eval(function(p,a,c,k,e,r){e=$e;if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'$d'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\\\b'+e(c)+'\\\\b','g'),k[c]);return p}('$p',$a,$c,'$k'.split('|'),0,{}))");
+	    return 'eval(function(p,a,c,k,e,r){e=$e;if(\'0\'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return\'$d\'};c=1};while(c--)if(k[c])p=p.replace(new RegExp(\'\\\\b\'+e(c)+\'\\\\b\',\'g\'),k[c]);return p}(\'$p\',$a,$c,\'$k\'.split(\'|\'),0,{}))';
 	}
 	
 	override public function search(script:String):Words {
 		var words = new Words();
-		~/\b[\da-zA-Z]\b|\w{2,}/.customReplace(script, function(r) {
+		~/\b[\da-zA-Z]\b|\w{2,}/g.map(script, function(r) {
 			words.add(new WordsItem(r.matched(0)));
 			return "";
 		});
@@ -147,7 +147,7 @@ class Base62 extends Encoder {
 	}
 	
 	public function getPattern(words:Words):EReg {
-		return new EReg(getPatternString(words), "");
+		return new EReg(getPatternString(words), "g");
 	}
 	
 	static var ENCODE10 = "String";

@@ -14,7 +14,7 @@ class Shrinker {
 		// put strings and regular expressions back
 		var data = _data; // encoded strings and regular expressions
 		_data = null;
-		return ~/\x01(\d+)\x01/.customReplace(script, function(r) {
+		return ~/\x01(\d+)\x01/g.map(script, function(r) {
 			return data[Std.parseInt(r.matched(1))];
 		});
 	}
@@ -39,14 +39,14 @@ class Shrinker {
 		script = encodeData(script);
 		
 		// identify blocks, particularly identify function blocks (which define scope)
-		var BLOCK         = ~/((catch|do|if|while|with|function)\b[^~{};]*(\(\s*[^{};]*\s*\))\s*)?(\{[^{}]*\})/;
+		var BLOCK         = ~/((catch|do|if|while|with|function)\b[^~{};]*(\(\s*[^{};]*\s*\))\s*)?(\{[^{}]*\})/g;
 		var BRACKETS      = ~/\{[^{}]*\}|\[[^\[\]]*\]|\([^\(\)]*\)|~[^~]+~/;
 		var BRACKETS_g    = ~/\{[^{}]*\}|\[[^\[\]]*\]|\([^\(\)]*\)|~[^~]+~/g;
-		var ENCODED_BLOCK = ~/~#?(\d+)~/;
-		var IDENTIFIER    = ~/[a-zA-Z_$][\w\$]*/;
-		var SCOPED        = ~/~#(\d+)~/;
+		var ENCODED_BLOCK = ~/~#?(\d+)~/g;
+		var IDENTIFIER    = ~/[a-zA-Z_$][\w\$]*/g;
+		var SCOPED        = ~/~#(\d+)~/g;
 		var VAR_g         = ~/\bvar\b/g;
-		var VARS          = ~/\bvar\s+[\w$]+[^;#]*|\bfunction\s+[\w$]+/;
+		var VARS          = ~/\bvar\s+[\w$]+[^;#]*|\bfunction\s+[\w$]+/g;
 		var VAR_TIDY      = ~/\b(var|function)\b|\sin\s+[^;]+/g;
 		var VAR_EQUAL     = ~/\s*=[^,;]*/g;
 		
@@ -54,7 +54,7 @@ class Shrinker {
 		// decoder for program blocks
 		function decodeBlocks(script:String, encoded:EReg) {
 			while (encoded.match(script)) {
-				script = encoded.customReplace(script, function(r){
+				script = encoded.map(script, function(r){
 					return blocks[Std.parseInt(r.matched(1))];
 				});
 			}
@@ -94,7 +94,7 @@ class Shrinker {
 				if (args != "_no_shrink_") {
 					var count = 0, shortId;
 					var ids = eregAllMatched(IDENTIFIER, args + "," + vars);
-					var processed = new Hash<Bool>();
+					var processed = new Map<String,Bool>();
 					for (id in ids) {
 						if (!processed.exists(id)) {
 							processed.set(id, true);
@@ -123,7 +123,7 @@ class Shrinker {
 		
 		// encode blocks, as we encode we replace variable and argument names
 		while (BLOCK.match(script)) {
-			script = BLOCK.customReplace(script, encodeBlocks);
+			script = BLOCK.map(script, encodeBlocks);
 		}
 		
 		// put the blocks back
@@ -152,7 +152,7 @@ class Shrinker {
 	
 	static function eregAllMatched(r:EReg, m:String):Array<String> {
 		var a = [];
-		r.customReplace(m, function(r){
+		r.map(m, function(r){
 			a.push(r.matched(0));
 			return "";
 		});

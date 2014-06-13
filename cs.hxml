@@ -1,6 +1,6 @@
--php bin/php
+-cs bin
 -main Test
 -cp src
 -cp test
 -lib utest
--cmd php bin/php/index.php
+-cmd mono bin/bin/Test.exe

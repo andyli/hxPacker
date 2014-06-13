@@ -3,5 +3,5 @@
 -cp src
 -cp test
 -lib utest
-
--cmd open bin/Test.html
+-D nodejs
+-cmd node bin/Test.js

@@ -1,6 +1,6 @@
--php bin/php
+-java bin
 -main Test
 -cp src
 -cp test
 -lib utest
--cmd php bin/php/index.php
+-cmd java -jar bin/Test.jar

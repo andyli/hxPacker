@@ -1,6 +1,6 @@
--php bin/php
+-neko bin/Test.n
 -main Test
 -cp src
 -cp test
 -lib utest
--cmd php bin/php/index.php
+-cmd neko bin/Test.n

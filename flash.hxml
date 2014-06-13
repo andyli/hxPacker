@@ -1,0 +1,6 @@
+-swf bin/Test.swf
+-main Test
+-cp src
+-cp test
+-lib utest
+-cmd open bin/Test.swf

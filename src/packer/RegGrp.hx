@@ -3,7 +3,7 @@ package packer;
 using Lambda;
 
 class RegGrp {
-    inline public static var IGNORE:Replace = function(a:Array<String>) return a[0];
+    public static var IGNORE:Replace = function(a:Array<String>) return a[0];
     
     public var ignoreCase:Bool;
     public var list(default, null):List<RegGrpItem>;
@@ -25,8 +25,8 @@ class RegGrp {
 	public function exec(string:String, ?_override:Replace):String {
 		if (list.empty()) return string;
 		
-		return new EReg(toString(), ignoreCase ? "i" : "")
-			.customReplace(string, function(r:EReg):String {
+		return new EReg(toString(), ignoreCase ? "ig" : "g")
+			.map(string, function(r:EReg):String {
 				var offset = 1;
 			    // Loop through the RegGrp items.
 			    for (item in list) {
@@ -46,7 +46,7 @@ class RegGrp {
 		var offset = 1;
 		return "(" + list.map(function(item:RegGrpItem) {
 	      // Fix back references.
-	      var expression = ~/\\(\d+)/.customReplace(item.toString(), function(r:EReg):String {
+	      var expression = ~/\\(\d+)/g.map(item.toString(), function(r:EReg):String {
 	        return "\\" + (offset + Std.parseInt(r.matched(1)));
 	      });
 	      offset += item.length + 1;
@@ -102,7 +102,7 @@ class RegGrp {
 		expression = ~/\\./g.replace(expression, "");
 		expression = ~/\(\?[:=!]|\[[^\]]+\]/g.replace(expression, "");
 		var n = 0;
-		~/\(/.customReplace(expression, function(r:EReg):String {
+		~/\(/g.map(expression, function(r:EReg):String {
 			++n;
 			return "";
 		});
